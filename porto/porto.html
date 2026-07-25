@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Nadia Kaila — Portfolio</title>
+<meta name="description" content="Portfolio of Nadia Kaila — Data Science student & AI Researcher focused on Machine Learning, Computer Vision, and Time-to-Event Analysis." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ DESIGN TOKENS ============ */
+  :root{
+    --white:#ffffff;
+    --bg-soft:#f5f8ff;
+    --ink:#0f1b3d;
+    --ink-soft:#4a5578;
+    --muted:#7b86a8;
+    --blue:#2a52e6;
+    --blue-deep:#17307d;
+    --blue-bright:#5b8cff;
+    --line:#e3e9fb;
+    --card:#ffffff;
+    --shadow: 0 8px 30px rgba(23,48,125,0.08);
+    --shadow-hover: 0 16px 40px rgba(23,48,125,0.14);
+    --radius: 16px;
+    --max: 1080px;
+    --font-display:'Sora', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    font-family:var(--font-body);
+    color:var(--ink);
+    background:var(--white);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{ color:inherit; text-decoration:none; }
+  ul{ list-style:none; }
+  img{ max-width:100%; display:block; }
+  section{ position:relative; }
+  ::selection{ background:var(--blue); color:#fff; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  .wrap{ max-width:var(--max); margin:0 auto; padding:0 28px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--font-mono); font-size:12.5px; letter-spacing:0.06em;
+    text-transform:uppercase; color:var(--blue-deep);
+    background:var(--bg-soft); border:1px solid var(--line);
+    padding:6px 14px; border-radius:999px;
+  }
+  .eyebrow .dot{
+    width:7px; height:7px; border-radius:50%; background:var(--blue);
+    box-shadow:0 0 0 0 rgba(42,82,230,0.5);
+    animation:pulse 2.2s infinite;
+  }
+  @keyframes pulse{
+    0%{ box-shadow:0 0 0 0 rgba(42,82,230,0.45); }
+    70%{ box-shadow:0 0 0 8px rgba(42,82,230,0); }
+    100%{ box-shadow:0 0 0 0 rgba(42,82,230,0); }
+  }
+
+  /* ============ PROGRESS SIGNATURE LINE ============ */
+  #progress-line{
+    position:fixed; top:0; left:0; height:3px; width:0%;
+    background:linear-gradient(90deg, var(--blue-deep), var(--blue), var(--blue-bright));
+    z-index:999; transition:width 0.1s linear;
+  }
+
+  /* ============ NAV ============ */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(255,255,255,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 28px; max-width:var(--max); margin:0 auto;
+  }
+  .logo{
+    font-family:var(--font-display); font-weight:700; font-size:19px;
+    color:var(--ink); display:flex; align-items:center; gap:8px;
+  }
+  .logo .sq{
+    width:10px; height:10px; background:var(--blue); border-radius:3px;
+    transform:rotate(45deg);
+  }
+  .nav-links{ display:flex; gap:34px; }
+  .nav-links a{
+    font-size:14.5px; font-weight:500; color:var(--ink-soft);
+    position:relative; padding:4px 0;
+    transition:color 0.2s ease;
+  }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:-2px; height:2px; width:0%;
+    background:var(--blue); transition:width 0.25s ease;
+  }
+  .nav-links a:hover{ color:var(--blue-deep); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{
+    font-size:14px; font-weight:600; color:#fff !important;
+    background:var(--blue); padding:9px 18px; border-radius:10px;
+    transition:background 0.2s ease, transform 0.2s ease;
+  }
+  .nav-cta:hover{ background:var(--blue-deep); transform:translateY(-1px); }
+  .nav-cta::after{ display:none; }
+  .menu-btn{ display:none; background:none; border:none; cursor:pointer; }
+
+  /* ============ HERO ============ */
+  .hero{
+    padding:96px 0 100px;
+    background:
+      radial-gradient(600px 300px at 85% 0%, rgba(91,140,255,0.12), transparent 70%),
+      radial-gradient(500px 260px at 0% 20%, rgba(42,82,230,0.07), transparent 70%);
+  }
+  .hero-inner{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center; }
+  .hero h1{
+    font-family:var(--font-display); font-weight:800;
+    font-size:clamp(36px, 5vw, 58px); line-height:1.08; letter-spacing:-0.02em;
+    margin:20px 0 18px; color:var(--ink);
+  }
+  .hero h1 span{
+    background:linear-gradient(100deg, var(--blue-deep), var(--blue) 55%, var(--blue-bright));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    font-size:18px; color:var(--ink-soft); max-width:520px; margin-bottom:32px;
+  }
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom:44px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-weight:600; font-size:15px; padding:13px 24px; border-radius:12px;
+    transition:all 0.2s ease; border:1px solid transparent;
+  }
+  .btn-primary{ background:var(--blue); color:#fff; box-shadow:0 10px 24px rgba(42,82,230,0.28); }
+  .btn-primary:hover{ background:var(--blue-deep); transform:translateY(-2px); box-shadow:0 14px 28px rgba(42,82,230,0.34); }
+  .btn-ghost{ background:#fff; color:var(--ink); border-color:var(--line); }
+  .btn-ghost:hover{ border-color:var(--blue); color:var(--blue-deep); transform:translateY(-2px); }
+
+  .stat-row{ display:flex; gap:36px; flex-wrap:wrap; }
+  .stat b{
+    display:block; font-family:var(--font-display); font-size:26px; color:var(--blue-deep);
+  }
+  .stat span{ font-size:13px; color:var(--muted); }
+
+  .hero-visual{
+    position:relative; aspect-ratio:1/1.05; border-radius:24px;
+    background:linear-gradient(160deg, var(--bg-soft), #eef3ff);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+  .hero-visual .avatar-ring{
+    width:62%; aspect-ratio:1/1; border-radius:50%;
+    background:linear-gradient(160deg, var(--blue), var(--blue-bright));
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display); font-weight:800; color:#fff; font-size:56px;
+    box-shadow:0 20px 50px rgba(42,82,230,0.35);
+  }
+  .hero-visual::before, .hero-visual::after{
+    content:''; position:absolute; border-radius:50%; border:1px dashed rgba(42,82,230,0.25);
+  }
+  .hero-visual::before{ width:82%; aspect-ratio:1/1; }
+  .hero-visual::after{ width:100%; aspect-ratio:1/1; }
+
+  /* ============ SECTION HEADER ============ */
+  .section{ padding:88px 0; }
+  .section-head{ max-width:620px; margin-bottom:48px; }
+  .section-head .eyebrow{ margin-bottom:16px; }
+  .section-head h2{
+    font-family:var(--font-display); font-weight:700; font-size:clamp(28px,3.4vw,38px);
+    letter-spacing:-0.01em; margin-bottom:14px; color:var(--ink);
+  }
+  .section-head p{ color:var(--ink-soft); font-size:16px; }
+  .alt-bg{ background:var(--bg-soft); }
+
+  /* signature connector marker before each section head */
+  .section-head{ position:relative; padding-left:26px; }
+  .section-head::before{
+    content:''; position:absolute; left:0; top:6px; bottom:0;
+    width:2px; background:var(--line);
+  }
+  .section-head::after{
+    content:''; position:absolute; left:-4px; top:2px;
+    width:10px; height:10px; border-radius:50%;
+    background:var(--white); border:2px solid var(--blue);
+  }
+
+  /* ============ ABOUT ============ */
+  .about-grid{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:start; }
+  .about-photo{
+    aspect-ratio:4/5; border-radius:20px; overflow:hidden;
+    background:linear-gradient(160deg,#eef3ff, var(--bg-soft));
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+  }
+  .about-photo span{ font-family:var(--font-mono); color:var(--muted); font-size:13px; }
+  .about-text p{ color:var(--ink-soft); margin-bottom:16px; font-size:16px; }
+  .fact-list{ display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:24px; }
+  .fact-list li{
+    background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px 16px;
+    font-size:14px; color:var(--ink-soft);
+  }
+  .fact-list li b{ display:block; color:var(--ink); font-size:14.5px; margin-bottom:2px; }
+
+  /* ============ PROJECTS ============ */
+  .project-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:24px; }
+  .project-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; box-shadow:var(--shadow); transition:transform 0.25s ease, box-shadow 0.25s ease;
+    display:flex; flex-direction:column; height:100%;
+  }
+  .project-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-hover); }
+  .project-tag{
+    font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.05em; text-transform:uppercase;
+    color:var(--blue); margin-bottom:12px;
+  }
+  .project-card h3{ font-family:var(--font-display); font-size:20px; margin-bottom:10px; color:var(--ink); }
+  .project-card p{ color:var(--ink-soft); font-size:14.5px; margin-bottom:18px; flex-grow:1; }
+  .chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; }
+  .chip{
+    font-size:12px; font-weight:500; color:var(--blue-deep); background:var(--bg-soft);
+    border:1px solid var(--line); padding:5px 10px; border-radius:999px;
+  }
+  .project-link{
+    font-size:14px; font-weight:600; color:var(--blue-deep); display:inline-flex; align-items:center; gap:6px;
+  }
+  .project-link svg{ transition:transform 0.2s ease; }
+  .project-card:hover .project-link svg{ transform:translateX(3px); }
+
+  /* ============ SKILLS ============ */
+  .skills-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:22px; }
+  .skill-card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius); padding:24px;
+  }
+  .skill-card h4{ font-family:var(--font-display); font-size:16.5px; margin-bottom:14px; color:var(--ink); }
+  .skill-card .chip-row{ margin-bottom:0; }
+
+  /* ============ CONTACT ============ */
+  .contact-box{
+    background:linear-gradient(135deg, var(--blue-deep), var(--blue));
+    border-radius:24px; padding:56px; color:#fff;
+    display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;
+  }
+  .contact-box h2{ font-family:var(--font-display); font-size:clamp(24px,3vw,32px); margin-bottom:10px; }
+  .contact-box p{ color:rgba(255,255,255,0.82); max-width:420px; }
+  .contact-box .btn-primary{ background:#fff; color:var(--blue-deep); box-shadow:none; }
+  .contact-box .btn-primary:hover{ background:#eef3ff; }
+
+  footer{
+    padding:36px 0; border-top:1px solid var(--line);
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;
+  }
+  footer p{ color:var(--muted); font-size:13.5px; }
+  .social-row{ display:flex; gap:18px; }
+  .social-row a{
+    font-size:13.5px; font-weight:500; color:var(--ink-soft); transition:color 0.2s ease;
+  }
+  .social-row a:hover{ color:var(--blue-deep); }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width:880px){
+    .nav-links{ display:none; }
+    .menu-btn{ display:block; }
+    .hero-inner{ grid-template-columns:1fr; }
+    .hero-visual{ max-width:320px; margin:0 auto; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-photo{ max-width:280px; margin:0 auto; }
+    .project-grid{ grid-template-columns:1fr; }
+    .skills-grid{ grid-template-columns:1fr 1fr; }
+    .contact-box{ padding:36px; flex-direction:column; text-align:center; justify-content:center; }
+  }
+  @media (max-width:520px){
+    .skills-grid{ grid-template-columns:1fr; }
+    .stat-row{ gap:22px; }
+    .fact-list{ grid-template-columns:1fr; }
+  }
+
+  /* focus visibility for accessibility */
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--blue); outline-offset:3px; border-radius:4px;
+  }
+
+  /* scroll reveal */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+
+<div id="progress-line"></div>
+
+<header>
+  <nav>
+    <a href="#home" class="logo"><span class="sq"></span> Nadia Kaila</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#contact" class="nav-cta">Contact Me</a></li>
+    </ul>
+    <button class="menu-btn" aria-label="Menu">☰</button>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="home">
+    <div class="wrap hero-inner">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Open to new opportunities</div>
+        <h1>Hi, I'm <span>Nadia Kaila</span> — transforming data into intelligent solutions for real-world impact.</h1>
+        <p class="lead">Data Science student at the State University of Surabaya with research experience in Artificial Intelligence and Machine Learning. Passionate about building AI-driven solutions for computer vision, healthcare, and predictive analytics, with a strong appreciation for intuitive data visualization and human-centered UI/UX.</p>
+        <div class="cta-row">
+          <a href="#projects" class="btn btn-primary">View My Projects</a>
+          <a href="#" class="btn btn-ghost">Download CV</a>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><b>3</b><span>Featured projects</span></div>
+          <div class="stat"><b>4</b><span>Awards & achievements</span></div>
+          <div class="stat"><b>1</b><span>Publication</span></div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="avatar-ring">NK</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">About Me</div>
+        <h2>Get to know me</h2>
+        <p>A quick look at my background, interests, and what drives my work.</p>
+      </div>
+      <div class="about-grid">
+        <div class="about-photo reveal"><img src="foto.jpg" alt="Foto Nadia Kaila" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="about-text reveal">
+          <p>I'm driven by a curiosity to understand how AI can uncover meaningful patterns from complex data and transform them into real-world impact. My interests lie at the intersection of healthcare, Time-to-Event (Survival) Analysis, predictive modeling, and interpretable AI, where I enjoy developing intelligent approaches that support more informed decision-making.</p>
+          <p>Beyond research, I enjoy building AI solutions that combine technical innovation with practical usability. Whether developing computer vision systems, leading a national UI/UX competition, or creating educational content, I believe the most impactful technology is not only accurate but also accessible, intuitive, and human-centered.</p>
+          <ul class="fact-list">
+            <li><b>Location</b>Sidoarjo, East Java</li>
+            <li><b>Focus</b>AI, Machine Learning, Computer Vision, Time-to-Event Analysis</li>
+            <li><b>Education</b>State University of Surabaya — Bachelor of Data Science</li>
+            <li><b>Languages</b>Indonesian, English</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="section alt-bg" id="projects">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Selected Work</div>
+        <h2>Projects I've built</h2>
+        <p>A few projects that show how I think and work — from problem to solution.</p>
+      </div>
+      <div class="project-grid">
+
+        <article class="project-card reveal">
+          <div class="project-tag">Jul 2026</div>
+          <h3>Hospital Digital Maturity & Operational Efficiency Analysis</h3>
+          <p>A data analytics platform to evaluate the relationship between digital transformation and operational efficiency in hospitals, using Two-Way ANOVA, Multiple Linear Regression, K-Means Clustering, and a Prioritization Matrix, complete with an interactive dashboard to support data-driven decision-making.</p>
+          <div class="chip-row">
+            <span class="chip">Python</span>
+            <span class="chip">Pandas</span>
+            <span class="chip">Scikit-learn</span>
+            <span class="chip">Streamlit</span>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-tag">Jun 2026</div>
+          <h3>AI-Powered UAV Aerial Image Analysis with RAG</h3>
+          <p>An end-to-end aerial image analysis system combining semantic segmentation with Retrieval-Augmented Generation (RAG) for interactive geospatial insights. Trained an 8-class SegFormer-B0 segmentation model on the UAVid dataset, integrated ChromaDB and Google Gemini 2.5 Flash for natural language querying, and implemented entropy-based uncertainty estimation.</p>
+          <div class="chip-row">
+            <span class="chip">PyTorch</span>
+            <span class="chip">SegFormer</span>
+            <span class="chip">ChromaDB</span>
+            <span class="chip">Google Gemini API</span>
+          </div>
+        </article>
+
+        <article class="project-card reveal">
+          <div class="project-tag">Feb 2026</div>
+          <h3>GlaucoStat: Quality-Aware Multimodal Glaucoma Detection</h3>
+          <p>An AI-powered clinical decision support system for early glaucoma detection, combining multimodal transfer learning (EfficientNetB0 and FundusQ-Net), image quality assessment, and predictive uncertainty estimation via Monte Carlo Dropout, with an interactive Streamlit dashboard for real-time prediction.</p>
+          <div class="chip-row">
+            <span class="chip">PyTorch</span>
+            <span class="chip">Streamlit</span>
+            <span class="chip">Deep Learning</span>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="section" id="skills">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Skills & Tools</div>
+        <h2>What I work with</h2>
+        <p>Tools and capabilities I use day-to-day to get things done.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <h4>Programming</h4>
+          <div class="chip-row">
+            <span class="chip">Python</span><span class="chip">SQL</span><span class="chip">JavaScript</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>Machine Learning & AI</h4>
+          <div class="chip-row">
+            <span class="chip">Machine Learning</span><span class="chip">Deep Learning</span><span class="chip">Computer Vision</span><span class="chip">Generative AI</span><span class="chip">LLM</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>Data Analysis</h4>
+          <div class="chip-row">
+            <span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Scikit-learn</span><span class="chip">Statistical Analysis</span><span class="chip">Data Visualization</span>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <h4>Tools</h4>
+          <div class="chip-row">
+            <span class="chip">Git/GitHub</span><span class="chip">Streamlit</span><span class="chip">Figma</span><span class="chip">Canva</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="contact-box reveal">
+        <div>
+          <h2>Let's connect</h2>
+          <p>Open to project discussions, collaborations, or just a chat about data & technology.</p>
+        </div>
+        <a href="mailto:bynadiakaila@gmail.com" class="btn btn-primary">Send Email</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; width:100%;">
+    <p>© 2026 Nadia Kaila. Built with HTML, CSS & JavaScript.</p>
+    <div class="social-row">
+      <a href="https://www.linkedin.com/in/nadia-kaila" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="mailto:bynadiakaila@gmail.com">Email</a>
+      <a href="tel:082338423177">Phone</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Progress line berdasarkan scroll
+  const progressLine = document.getElementById('progress-line');
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressLine.style.width = pct + '%';
+  });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('in');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  // Smooth close for mobile menu (placeholder toggle jika ingin dikembangkan)
+  const menuBtn = document.querySelector('.menu-btn');
+  const navLinks = document.querySelector('.nav-links');
+  menuBtn?.addEventListener('click', () => {
+    const isOpen = navLinks.style.display === 'flex';
+    navLinks.style.display = isOpen ? 'none' : 'flex';
+    navLinks.style.flexDirection = 'column';
+    navLinks.style.position = 'absolute';
+    navLinks.style.top = '64px';
+    navLinks.style.right = '20px';
+    navLinks.style.background = '#fff';
+    navLinks.style.border = '1px solid var(--line)';
+    navLinks.style.borderRadius = '12px';
+    navLinks.style.padding = '16px';
+    navLinks.style.boxShadow = '0 10px 30px rgba(23,48,125,0.12)';
+  });
+</script>
+
+</body>
+</html>
